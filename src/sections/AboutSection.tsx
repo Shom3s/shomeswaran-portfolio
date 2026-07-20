@@ -1,6 +1,7 @@
 import { AnimatedText } from '../components/AnimatedText';
 import { ContactButton } from '../components/ContactButton';
 import { FadeIn } from '../components/FadeIn';
+import { ArrowUpRight, Github } from 'lucide-react';
 import { decorativeImages, profile } from '../data';
 
 export function AboutSection() {
@@ -38,8 +39,20 @@ export function AboutSection() {
             className="mx-auto max-w-4xl px-2 text-center text-[clamp(1rem,1.65vw,1.3rem)] font-medium leading-[1.75] text-[#D7E2EA] sm:px-6"
           />
 
-          <div className="mt-10 sm:mt-12 md:mt-14">
+          <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:mt-12 sm:flex-row md:mt-14">
             <ContactButton />
+
+            <a
+              href="https://github.com/Shom3s"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Open Shomeswaran's GitHub profile"
+              className="group inline-flex min-h-12 items-center justify-center gap-3 rounded-full border border-[#D7E2EA]/30 bg-white/[0.04] px-7 text-sm font-bold uppercase tracking-[0.16em] text-[#D7E2EA] transition-all duration-300 hover:-translate-y-1 hover:border-[#D7E2EA] hover:bg-[#D7E2EA] hover:text-[#0C0C0C] sm:px-8"
+            >
+              <Github className="h-5 w-5" />
+              GitHub
+              <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
+            </a>
           </div>
         </div>
       </div>

@@ -110,7 +110,7 @@ const projectDetails: Record<string, ProjectDetail> = {
     description:
       'An AI-powered smart health monitoring and nutrition advisor concept that combines mobile app development, food recognition, IoT health data and personalised recommendations.',
     technologies: ['Flutter', 'Firebase', 'TensorFlow Lite', 'Health Connect'],
-    github: 'https://github.com/Shom3s/nutripulse.git',
+    github: 'https://github.com/Shom3s',
   },
   '02': {
     description:
@@ -122,7 +122,7 @@ const projectDetails: Record<string, ProjectDetail> = {
     description:
       'A web-based visual inspection reporting system based on API 510 requirements, with inspection data management, automated PDF and Microsoft Word report export, structured frontend and backend modules, database operations and live web deployment.',
     technologies: ['JavaScript', 'HTML', 'CSS', 'SQL', 'API 510'],
-    github: 'https://github.com/nadiahafiz/inspection-report-system.git',
+    github: 'https://github.com/Shom3s',
   },
   '04': {
     description:
@@ -140,13 +140,13 @@ const projectDetails: Record<string, ProjectDetail> = {
     description:
       'A system that manages book records, member details, borrowing activities, searching, sorting and data storage for library operations.',
     technologies: ['C', 'CSV Data Storage', 'Console Application'],
-    github: 'https://github.com/Shom3s/Library-Management-System.git',
+    github: 'https://github.com/Shom3s',
   },
   '07': {
     description:
       'A console-based vehicle management project that includes insert, delete, update, search, sorting and PUSPAKOM check features.',
     technologies: ['C', 'Console Application', 'File Handling'],
-    github: 'https://github.com/Shom3s/JPJ-MANAGEMENT-SYSTEM.git',
+    github: 'https://github.com/Shom3s',
   },
 };
 
@@ -326,7 +326,7 @@ function ProjectCard({
   return (
     <div
       ref={containerRef}
-      className="relative h-[94vh]"
+      className="relative mb-10 h-auto pb-4 md:mb-0 md:h-[94vh] md:pb-0"
     >
       <motion.article
         onMouseMove={handlePointerMove}
@@ -351,7 +351,7 @@ function ProjectCard({
             '--card-offset': cardOffset,
           } as MotionStyle & { '--card-offset': string }
         }
-        className="group sticky top-[calc(6rem+var(--card-offset))] origin-top transform-gpu overflow-hidden rounded-[40px] border-2 border-[#D7E2EA] bg-[#0C0C0C] p-4 shadow-[0_32px_100px_rgba(0,0,0,0.55)] will-change-transform sm:rounded-[50px] sm:p-6 md:top-[calc(8rem+var(--card-offset))] md:rounded-[60px] md:p-8"
+        className="group relative origin-top transform-gpu overflow-hidden rounded-[32px] border-2 border-[#D7E2EA] bg-[#0C0C0C] p-3 shadow-[0_24px_70px_rgba(0,0,0,0.48)] will-change-transform sm:rounded-[42px] sm:p-5 md:sticky md:top-[calc(8rem+var(--card-offset))] md:rounded-[60px] md:p-8 md:shadow-[0_32px_100px_rgba(0,0,0,0.55)]"
       >
         <div className="absolute inset-x-8 top-0 z-30 h-[2px] overflow-hidden bg-white/10">
           <motion.div
@@ -366,7 +366,7 @@ function ProjectCard({
           className="pointer-events-none absolute inset-0 z-20 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
         />
 
-        <div className="grid overflow-hidden rounded-[30px] border border-white/10 bg-[#101216] sm:rounded-[38px] md:rounded-[48px] lg:h-[520px] lg:grid-cols-2 xl:h-[550px]">
+        <div className="grid overflow-hidden rounded-[24px] border border-white/10 bg-[#101216] sm:rounded-[34px] md:rounded-[48px] lg:h-[520px] lg:grid-cols-2 xl:h-[550px]">
           <div className="relative h-[280px] min-w-0 overflow-hidden border-b border-white/10 bg-[#0C0C0C] sm:h-[340px] lg:h-full lg:border-b-0 lg:border-r">
             <motion.img
               src={project.images[0]}
@@ -415,7 +415,7 @@ function ProjectCard({
               y: contentY,
               opacity: contentOpacity,
             }}
-            className="relative flex min-h-[390px] min-w-0 transform-gpu flex-col justify-between overflow-hidden p-5 will-change-transform sm:p-6 md:p-7 lg:h-full lg:min-h-0 lg:p-8 xl:p-9"
+            className="relative flex min-w-0 transform-gpu flex-col justify-between overflow-hidden p-5 pb-6 will-change-transform sm:p-6 sm:pb-7 md:min-h-[390px] md:p-7 lg:h-full lg:min-h-0 lg:p-8 xl:p-9"
           >
             <div>
               <div className="mb-5 flex min-w-0 items-start justify-between gap-4">
