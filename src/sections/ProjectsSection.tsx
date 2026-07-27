@@ -110,7 +110,7 @@ const projectDetails: Record<string, ProjectDetail> = {
     description:
       'An AI-powered smart health monitoring and nutrition advisor concept that combines mobile app development, food recognition, IoT health data and personalised recommendations.',
     technologies: ['Flutter', 'Firebase', 'TensorFlow Lite', 'Health Connect'],
-    github: 'https://github.com/Shom3s',
+    github: 'https://github.com/Shom3s/nutripulse',
   },
   '02': {
     description:
@@ -122,7 +122,7 @@ const projectDetails: Record<string, ProjectDetail> = {
     description:
       'A web-based visual inspection reporting system based on API 510 requirements, with inspection data management, automated PDF and Microsoft Word report export, structured frontend and backend modules, database operations and live web deployment.',
     technologies: ['JavaScript', 'HTML', 'CSS', 'SQL', 'API 510'],
-    github: 'https://github.com/Shom3s',
+    github: 'https://github.com/nadiahafiz/inspection-report-system',
   },
   '04': {
     description:
@@ -140,13 +140,13 @@ const projectDetails: Record<string, ProjectDetail> = {
     description:
       'A system that manages book records, member details, borrowing activities, searching, sorting and data storage for library operations.',
     technologies: ['C', 'CSV Data Storage', 'Console Application'],
-    github: 'https://github.com/Shom3s',
+    github: 'https://github.com/Shom3s/Library-Management-System',
   },
   '07': {
     description:
       'A console-based vehicle management project that includes insert, delete, update, search, sorting and PUSPAKOM check features.',
     technologies: ['C', 'Console Application', 'File Handling'],
-    github: 'https://github.com/Shom3s',
+    github: 'https://github.com/Shom3s/JPJ-MANAGEMENT-SYSTEM',
   },
 };
 
@@ -226,45 +226,44 @@ function ProjectCard({
   const reduceMotion = Boolean(useReducedMotion());
 
   const details = projectDetails[project.number] ?? fallbackDetail;
-  const targetScale = 1 - (totalCards - 1 - index) * 0.03;
-  const cardOffset = `${index * 28}px`;
+  // Keep stacked cards slightly smaller while the current card becomes dominant.
+  const stackedScale = Math.max(
+    0.94,
+    1 - (totalCards - 1 - index) * 0.012,
+  );
+  const cardOffset = `${index * 24}px`;
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ['start 92%', 'end 12%'],
+    offset: ['start 88%', 'end 18%'],
   });
 
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 105,
-    damping: 30,
-    mass: 0.28,
-    restDelta: 0.001,
+    stiffness: 82,
+    damping: 26,
+    mass: 0.22,
+    restDelta: 0.002,
+    restSpeed: 0.002,
   });
 
   const cardScale = useTransform(
     smoothProgress,
-    [0, 0.18, 0.76, 1],
+    [0, 0.2, 0.58, 0.82, 1],
     reduceMotion
-      ? [1, 1, 1, 1]
-      : [0.94, 1, 1, targetScale],
+      ? [1, 1, 1, 1, 1]
+      : [0.965, 1.025, 1.025, 1, stackedScale],
   );
 
   const cardY = useTransform(
     smoothProgress,
-    [0, 0.2, 0.78, 1],
-    reduceMotion ? [0, 0, 0, 0] : [90, 0, 0, -24],
+    [0, 0.22, 0.82, 1],
+    reduceMotion ? [0, 0, 0, 0] : [48, 0, 0, -12],
   );
 
   const cardOpacity = useTransform(
     smoothProgress,
-    [0, 0.12, 0.9, 1],
-    reduceMotion ? [1, 1, 1, 1] : [0.25, 1, 1, 0.78],
-  );
-
-  const cardRotateX = useTransform(
-    smoothProgress,
-    [0, 0.24, 1],
-    reduceMotion ? [0, 0, 0] : [5, 0, -1.5],
+    [0, 0.14, 1],
+    reduceMotion ? [1, 1, 1] : [0.55, 1, 1],
   );
 
   const imageOpacity = useTransform(
@@ -275,8 +274,8 @@ function ProjectCard({
 
   const contentY = useTransform(
     smoothProgress,
-    [0, 0.22, 0.82, 1],
-    reduceMotion ? [0, 0, 0, 0] : [44, 0, 0, -14],
+    [0, 0.22, 1],
+    reduceMotion ? [0, 0, 0] : [24, 0, 0],
   );
 
   const contentOpacity = useTransform(
@@ -287,8 +286,8 @@ function ProjectCard({
 
   const numberX = useTransform(
     smoothProgress,
-    [0, 1],
-    reduceMotion ? [0, 0] : [20, -14],
+    [0, 0.3, 1],
+    reduceMotion ? [0, 0, 0] : [12, 0, 0],
   );
 
   const progressScale = useTransform(
@@ -297,31 +296,56 @@ function ProjectCard({
     [0, 1],
   );
 
-  // Pointer-driven tilt + spotlight, layered on top of the scroll-driven
-  // motion above. Kept subtle and fully disabled under reduced motion.
+
+
+  // Mouse-following 3D tilt and glare.
+  // The movement stays subtle and uses spring-based motion values so it feels
+  // premium without making scrolling unnecessarily heavy.
+  const pointerRotateX = useMotionValue(0);
   const pointerRotateY = useMotionValue(0);
-  const springPointerRotateY = useSpring(pointerRotateY, {
-    stiffness: 150,
-    damping: 20,
-    mass: 0.4,
+
+  const springPointerRotateX = useSpring(pointerRotateX, {
+    stiffness: 135,
+    damping: 22,
+    mass: 0.35,
   });
+
+  const springPointerRotateY = useSpring(pointerRotateY, {
+    stiffness: 135,
+    damping: 22,
+    mass: 0.35,
+  });
+
   const glareX = useMotionValue(50);
   const glareY = useMotionValue(50);
-  const glareBackground = useMotionTemplate`radial-gradient(560px circle at ${glareX}% ${glareY}%, rgba(255,255,255,0.07), transparent 60%)`;
+
+  const glareBackground = useMotionTemplate`radial-gradient(
+    460px circle at ${glareX}% ${glareY}%,
+    rgba(255,255,255,0.09),
+    transparent 62%
+  )`;
 
   function handlePointerMove(event: ReactMouseEvent<HTMLElement>) {
     if (reduceMotion) return;
+
     const rect = event.currentTarget.getBoundingClientRect();
-    const relX = (event.clientX - rect.left) / rect.width;
-    const relY = (event.clientY - rect.top) / rect.height;
-    pointerRotateY.set((relX - 0.5) * 8);
-    glareX.set(relX * 100);
-    glareY.set(relY * 100);
+    const relativeX = (event.clientX - rect.left) / rect.width;
+    const relativeY = (event.clientY - rect.top) / rect.height;
+
+    pointerRotateY.set((relativeX - 0.5) * 7);
+    pointerRotateX.set((0.5 - relativeY) * 5);
+
+    glareX.set(relativeX * 100);
+    glareY.set(relativeY * 100);
   }
 
   function handlePointerLeave() {
+    pointerRotateX.set(0);
     pointerRotateY.set(0);
+    glareX.set(50);
+    glareY.set(50);
   }
+
 
   return (
     <div
@@ -335,23 +359,26 @@ function ProjectCard({
           reduceMotion
             ? undefined
             : {
+              y: -6,
+              scale: 1.012,
               boxShadow:
-                '0 40px 120px rgba(0,0,0,0.6), 0 0 0 1px rgba(215,226,234,0.25)',
+                '0 34px 90px rgba(0,0,0,0.52), 0 0 0 1px rgba(215,226,234,0.22)',
             }
         }
-        transition={{ duration: 0.5, ease: 'easeOut' }}
+        transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
         style={
           {
             scale: cardScale,
             y: cardY,
             opacity: cardOpacity,
-            rotateX: cardRotateX,
+            rotateX: springPointerRotateX,
             rotateY: springPointerRotateY,
             transformPerspective: 1400,
+            transformStyle: 'preserve-3d',
             '--card-offset': cardOffset,
           } as MotionStyle & { '--card-offset': string }
         }
-        className="group relative origin-top transform-gpu overflow-hidden rounded-[32px] border-2 border-[#D7E2EA] bg-[#0C0C0C] p-3 shadow-[0_24px_70px_rgba(0,0,0,0.48)] will-change-transform sm:rounded-[42px] sm:p-5 md:sticky md:top-[calc(8rem+var(--card-offset))] md:rounded-[60px] md:p-8 md:shadow-[0_32px_100px_rgba(0,0,0,0.55)]"
+        className="group relative origin-top transform-gpu overflow-hidden rounded-[32px] border-2 border-[#D7E2EA] bg-[#0C0C0C] p-3 shadow-[0_20px_55px_rgba(0,0,0,0.42)] [backface-visibility:hidden] [contain:paint] sm:rounded-[42px] sm:p-5 md:sticky md:top-[calc(8rem+var(--card-offset))] md:rounded-[60px] md:p-8 md:shadow-[0_26px_75px_rgba(0,0,0,0.48)]"
       >
         <div className="absolute inset-x-8 top-0 z-30 h-[2px] overflow-hidden bg-white/10">
           <motion.div
@@ -363,7 +390,7 @@ function ProjectCard({
         <motion.div
           aria-hidden="true"
           style={{ background: glareBackground }}
-          className="pointer-events-none absolute inset-0 z-20 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+          className="pointer-events-none absolute inset-0 z-20 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
         />
 
         <div className="grid overflow-hidden rounded-[24px] border border-white/10 bg-[#101216] sm:rounded-[34px] md:rounded-[48px] lg:h-[520px] lg:grid-cols-2 xl:h-[550px]">
@@ -415,7 +442,7 @@ function ProjectCard({
               y: contentY,
               opacity: contentOpacity,
             }}
-            className="relative flex min-w-0 transform-gpu flex-col justify-between overflow-hidden p-5 pb-6 will-change-transform sm:p-6 sm:pb-7 md:min-h-[390px] md:p-7 lg:h-full lg:min-h-0 lg:p-8 xl:p-9"
+            className="relative flex min-w-0 flex-col justify-between overflow-hidden p-5 pb-6 sm:p-6 sm:pb-7 md:min-h-[390px] md:p-7 lg:h-full lg:min-h-0 lg:p-8 xl:p-9"
           >
             <div>
               <div className="mb-5 flex min-w-0 items-start justify-between gap-4">
@@ -515,7 +542,7 @@ export function ProjectsSection() {
   const backgroundX = useTransform(
     smoothSectionProgress,
     [0, 1],
-    reduceMotion ? ['0%', '0%'] : ['8%', '-18%'],
+    reduceMotion ? ['0%', '0%'] : ['3%', '-8%'],
   );
 
   return (
@@ -532,8 +559,8 @@ export function ProjectsSection() {
         Project · Build · Code
       </motion.div>
 
-      <div className="pointer-events-none absolute -left-28 top-20 h-80 w-80 rounded-full bg-white/[0.035] blur-3xl" />
-      <div className="pointer-events-none absolute -right-28 bottom-40 h-96 w-96 rounded-full bg-white/[0.035] blur-3xl" />
+      <div className="pointer-events-none absolute -left-28 top-20 h-80 w-80 rounded-full bg-white/[0.025] blur-2xl" />
+      <div className="pointer-events-none absolute -right-28 bottom-40 h-96 w-96 rounded-full bg-white/[0.025] blur-2xl" />
 
       <div className="relative mx-auto max-w-7xl">
         <motion.div
