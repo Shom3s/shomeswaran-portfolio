@@ -48,7 +48,7 @@ const education: EducationItem[] = [
     period: '2023 — 2027',
     institution: 'Universiti Teknikal Malaysia Melaka (UTeM)',
     qualification: 'Bachelor of Computer Science (Software Development)',
-    result: 'CGPA 3.89',
+    result: 'CGPA 3.91',
     description:
       'Focused on software engineering, mobile and web development, databases, artificial intelligence and real-world system projects.',
     icon: GraduationCap,
